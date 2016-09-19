@@ -5,7 +5,8 @@ var http = require('http').Server(app);
 
 
 app.get('/', function(req,res){
-    console.log("User connected!")
+    var currentTime = new Date();
+    console.log("User connected! "+currentTime)
     res.sendFile(__dirname+"/index.html")
 });
 
