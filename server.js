@@ -3,14 +3,13 @@ var app = express();
 var port = process.env.PORT || 1337;
 var http = require('http').Server(app);
 
-app.use(express.static('site'));
 
-app.get('/', function(res,req){
-    res.sendFile('index.html');
+app.get('/', function(req,res){
+    res.sendFile(__dirname+"/index.html")
 });
 
-var server = http.listen(port, function () {
-
+var server = http.listen(port,"192.168.0.8", function () {
+    
   var host = server.address().address;
   var port = server.address().port;
 
