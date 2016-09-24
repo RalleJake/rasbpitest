@@ -1,8 +1,10 @@
+var path = require('path');
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 1024;
 var http = require('http').Server(app);
 
+app.use(express.static(__dirname+"/public"));
 
 app.get('/', function(req,res){
     var currentTime = new Date();
@@ -18,3 +20,4 @@ var server = http.listen(port,"192.168.0.11", function () {
   console.log("Example app listening at http://%s:%s", host, port)
 
 });
+	
