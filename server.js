@@ -3,13 +3,17 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 1024;
 var http = require('http').Server(app);
+var iplocation = require('iplocation')
 
 app.use(express.static(__dirname+"/public"));
 
-app.get('/', function(req,res){
-    var currentTime = new Date();
-    console.log(req.ip+" connected! "+currentTime)
-    res.sendFile(__dirname+"/index.html")
+app.get('/', function(req,resp){
+
+iplocation(req.ip, function(error, res){
+  var currentTime = new Date();
+  console.log(currentTime+" | "+req.ip+" connected! | Contry:"+ res.country_name)
+})
+    resp.sendFile(__dirname+"/index.html")
 });
 
 var server = http.listen(port,"192.168.0.11", function () {
