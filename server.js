@@ -11,7 +11,7 @@ app.get('/', function(req,resp){
 
 iplocation(req.ip, function(error, res){
   var currentTime = new Date();
-  console.log(currentTime+" | "+req.ip+" connected! | country: "+ res.country_name+", city: "+res.city)
+  console.log(currentTime+" | "+req.ip+" | country: "+ res.country_name+", city: "+res.city)
 })
     resp.sendFile(__dirname+"/index.html")
 });
