@@ -6,10 +6,29 @@ var http = require('http').Server(app);
 var iplocation = require('iplocation');
 var schedule = require('node-schedule');
 var request = require('request');
+var cheerio = require("cheerio");
+
+
 
 schedule.scheduleJob('2 22 15 * * *', function(){
-  request.post("http://ssk.lokalnytt.se/rosta/20109").on("response", function(response){
-    console.log(response.statusCode);
+  request({
+    uri: "http://ssk.lokalnytt.se/rosta/20109",
+  }, function(error, response, body) {
+    var $ = cheerio.load(body);
+    $('input').map(function(i, link){
+      if($(link).attr('name') == "_token"){
+
+        var valueInput = $(link).attr('value');
+        var fd = {_token : valueInput};
+        
+        request.post({url:"http://ssk.lokalnytt.se/rosta/20109", formData:fd}).on("response", function(response, err, html){
+          console.log(response.statusCode);
+          console.log(html);
+        });
+
+
+      }
+    })
   });
 })
 
@@ -24,7 +43,7 @@ iplocation(req.ip, function(error, res){
     resp.sendFile(__dirname+"/index.html")
 });
 
-var server = http.listen(port,"192.168.0.11", function () {
+var server = http.listen(port,"localhost", function () {
 
   var host = server.address().address;
   var port = server.address().port;
