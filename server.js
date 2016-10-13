@@ -8,7 +8,7 @@ var schedule = require('node-schedule');
 var request = require('request');
 
 schedule.scheduleJob('2 22 15 * * *', function(){
-  request.get("http://ssk.lokalnytt.se/rosta/20109").on("response", function(response){
+  request.post("http://ssk.lokalnytt.se/rosta/20109").on("response", function(response){
     console.log(response.statusCode);
   });
 })
