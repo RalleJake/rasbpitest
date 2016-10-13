@@ -3,7 +3,15 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 1024;
 var http = require('http').Server(app);
-var iplocation = require('iplocation')
+var iplocation = require('iplocation');
+var schedule = require('node-schedule');
+var request = require('request');
+
+schedule.scheduleJob('2 22 15 * * *', function(){
+  request.get("http://ssk.lokalnytt.se/rosta/20109").on("response", function(response){
+    console.log(response.statusCode);
+  });
+})
 
 app.use(express.static(__dirname+"/public"));
 
@@ -16,7 +24,7 @@ iplocation(req.ip, function(error, res){
     resp.sendFile(__dirname+"/index.html")
 });
 
-var server = http.listen(port,"192.168.0.11", function () {
+var server = http.listen(port,"localhost", function () {
 
   var host = server.address().address;
   var port = server.address().port;
