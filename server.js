@@ -24,7 +24,7 @@ iplocation(req.ip, function(error, res){
     resp.sendFile(__dirname+"/index.html")
 });
 
-var server = http.listen(port,"localhost", function () {
+var server = http.listen(port,"192.168.0.11", function () {
 
   var host = server.address().address;
   var port = server.address().port;
